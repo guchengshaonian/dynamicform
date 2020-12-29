@@ -1,5 +1,7 @@
 package com.shaonian.dynamic.form.formitem;
 
+import android.text.TextUtils;
+
 import com.shaonian.dynamic.form.verify.BaseVerify;
 import com.shaonian.dynamic.form.verify.RequiredVerify;
 import com.shaonian.dynamic.form.verify.VerifyResult;
@@ -40,6 +42,7 @@ public abstract class BaseFormItem<T> {
         this.isReadOnly = isReadOnly;
         this.isRequired = isRequired;
         this.mVerify = verify;
+        setFormValue();
     }
 
     public String getTitle() {
@@ -126,6 +129,9 @@ public abstract class BaseFormItem<T> {
                     mFormValue = String.valueOf(value);
                 } else if (field.getType().equals(String.class)) {
                     mFormValue = (String) value;
+                    if (TextUtils.isEmpty(mFormValue)) {
+                        mFormValue = "";
+                    }
                 } else {
                     mFormValue = "";
                 }
