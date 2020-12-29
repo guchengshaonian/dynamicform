@@ -1,2 +1,3 @@
+include ':dynamic-form'
 include ':app'
 rootProject.name = "DynamicForm"
