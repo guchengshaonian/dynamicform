@@ -13,6 +13,13 @@ public class VerifyResult {
         return new VerifyResult("", true);
     }
 
+    public static VerifyResult fail(String message){
+        VerifyResult result = new VerifyResult();
+        result.setSuccess(false);
+        result.setMessage(message);
+        return result;
+    }
+
     public String getMessage() {
         return message;
     }

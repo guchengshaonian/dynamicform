@@ -9,8 +9,9 @@ public abstract class BaseVerify {
     /**
      * 校验，返回结果
      *
-     * @param value 检查结果
+     * @param isRequired 是否是必填项
+     * @param value      检查目标
      * @return 校验结果
      */
-    public abstract VerifyResult onVerify(String value);
+    public abstract VerifyResult onVerify(boolean isRequired, String value);
 }

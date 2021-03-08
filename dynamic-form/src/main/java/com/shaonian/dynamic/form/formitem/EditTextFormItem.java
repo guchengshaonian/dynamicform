@@ -1,6 +1,12 @@
 package com.shaonian.dynamic.form.formitem;
 
+import android.text.InputType;
+import android.widget.EditText;
+
+import com.blankj.utilcode.util.RegexUtils;
 import com.shaonian.dynamic.form.verify.BaseVerify;
+import com.shaonian.dynamic.form.verify.IdCardVerify;
+import com.shaonian.dynamic.form.verify.PhoneVerify;
 import com.shaonian.dynamic.form.verify.RequiredVerify;
 
 /**
@@ -8,6 +14,9 @@ import com.shaonian.dynamic.form.verify.RequiredVerify;
  * Date: 2020/12/25
  */
 public class EditTextFormItem<T> extends BaseFormItem<T> {
+
+    private int mEditInputType = InputType.TYPE_NULL;
+    private String mDigits = "";
 
     public enum EditTextType {
         /**
@@ -57,10 +66,16 @@ public class EditTextFormItem<T> extends BaseFormItem<T> {
     private void setTextType(EditTextType textType) {
         switch (textType) {
             case Tel:
+                mVerify = new PhoneVerify();
+                mEditInputType = InputType.TYPE_CLASS_PHONE;
                 break;
             case Number:
+                mEditInputType = InputType.TYPE_CLASS_NUMBER;
                 break;
             case IDCard:
+                mVerify = new IdCardVerify();
+                mEditInputType = InputType.TYPE_NUMBER_FLAG_SIGNED;
+                mDigits = "0123456789X";
                 break;
             case Normal:
             default:

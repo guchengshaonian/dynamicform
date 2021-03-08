@@ -5,16 +5,15 @@ import android.text.TextUtils;
 /**
  * @author wk.
  * Date: 2020/12/25
+ * 必填字段检验
  */
 public class RequiredVerify extends BaseVerify {
 
     @Override
-    public VerifyResult onVerify(String value) {
+    public VerifyResult onVerify(boolean isRequired, String value) {
         VerifyResult result;
-        if (TextUtils.isEmpty(value)) {
-            result = new VerifyResult();
-            result.setSuccess(false);
-            result.setMessage("必填字段不能为空");
+        if (isRequired && TextUtils.isEmpty(value)) {
+            result = VerifyResult.fail("必填字段不能为空");
         } else {
             result = VerifyResult.success();
         }

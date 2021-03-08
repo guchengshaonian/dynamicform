@@ -99,7 +99,7 @@ public abstract class BaseFormItem<T> {
     }
 
     public VerifyResult getVerifyResult() {
-        return mVerify.onVerify(getFormValue());
+        return mVerify.onVerify(isRequired,getFormValue());
     }
 
     /**
