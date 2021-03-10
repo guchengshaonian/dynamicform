@@ -13,29 +13,29 @@ import java.lang.reflect.Field;
  * Date: 2020/12/25
  * 基础的formitem类
  */
-public abstract class BaseFormItem<T> {
+public abstract class BaseFormItem {
 
     protected String mTitle;
     protected String mFormId;
-    protected T mValue;
+    protected Object mValue;
     protected String mFormValue;
     protected boolean isRequired;
     protected boolean isReadOnly;
     protected BaseVerify mVerify;
 
-    protected BaseFormItem(String title, String formId, T value) {
+    protected BaseFormItem(String title, String formId, Object value) {
         this(title, formId, value, true);
     }
 
-    protected BaseFormItem(String title, String formId, T value, boolean isRequired) {
+    protected BaseFormItem(String title, String formId, Object value, boolean isRequired) {
         this(title, formId, value, isRequired, false);
     }
 
-    protected BaseFormItem(String title, String formId, T value, boolean isRequired, boolean isReadOnly) {
+    protected BaseFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly) {
         this(title, formId, value, isRequired, isReadOnly, new RequiredVerify());
     }
 
-    protected BaseFormItem(String title, String formId, T value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
+    protected BaseFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
         this.mTitle = title;
         this.mFormId = formId;
         this.mValue = value;
@@ -61,7 +61,7 @@ public abstract class BaseFormItem<T> {
         mFormId = formId;
     }
 
-    public T getValue() {
+    public Object getValue() {
         return mValue;
     }
 
@@ -73,7 +73,7 @@ public abstract class BaseFormItem<T> {
         isRequired = required;
     }
 
-    public void setValue(T value) {
+    public void setValue(Object value) {
         mValue = value;
         setFormValue();
     }
@@ -99,7 +99,7 @@ public abstract class BaseFormItem<T> {
     }
 
     public VerifyResult getVerifyResult() {
-        return mVerify.onVerify(isRequired,getFormValue());
+        return mVerify.onVerify(isRequired, getFormValue());
     }
 
     /**
@@ -115,7 +115,7 @@ public abstract class BaseFormItem<T> {
      * 根据不同参数类型，设置成统一的输出
      */
     protected void setFormValue() {
-        Class<T> entityClass = (Class<T>) mValue.getClass();
+        Class<?> entityClass = mValue.getClass();
         if (entityClass.equals(String.class)) {
             mFormValue = (String) mValue;
         } else if (entityClass.isPrimitive()) {

@@ -12,8 +12,9 @@ import com.shaonian.dynamic.form.verify.RequiredVerify;
 /**
  * @author wk.
  * Date: 2020/12/25
+ * 文本框item
  */
-public class EditTextFormItem<T> extends BaseFormItem<T> {
+public class EditTextFormItem extends BaseFormItem {
 
     private int mEditInputType = InputType.TYPE_NULL;
     private String mDigits = "";
@@ -37,25 +38,41 @@ public class EditTextFormItem<T> extends BaseFormItem<T> {
         Number,
     }
 
-    public EditTextFormItem(String title, String formId, T value) {
+    public EditTextFormItem(String title, String formId, Object value) {
         this(title, formId, value, EditTextType.Normal);
     }
 
-    public EditTextFormItem(String title, String formId, T value, EditTextType textType) {
+    public EditTextFormItem(String title, String formId, Object value, EditTextType textType) {
         this(title, formId, value, textType, true);
     }
 
-    public EditTextFormItem(String title, String formId, T value, EditTextType textType, boolean isRequired) {
+    public EditTextFormItem(String title, String formId, Object value, EditTextType textType, boolean isRequired) {
         this(title, formId, value, textType, isRequired, false);
     }
 
-    public EditTextFormItem(String title, String formId, T value, EditTextType textType, boolean isRequired, boolean isReadOnly) {
+    public EditTextFormItem(String title, String formId, Object value, EditTextType textType, boolean isRequired, boolean isReadOnly) {
         this(title, formId, value, textType, isRequired, isReadOnly, new RequiredVerify());
     }
 
-    public EditTextFormItem(String title, String formId, T value, EditTextType textType, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
+    public EditTextFormItem(String title, String formId, Object value, EditTextType textType, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
         super(title, formId, value, isRequired, isReadOnly, verify);
         setTextType(textType);
+    }
+
+    public int getEditInputType() {
+        return mEditInputType;
+    }
+
+    public void setEditInputType(int editInputType) {
+        mEditInputType = editInputType;
+    }
+
+    public String getDigits() {
+        return mDigits;
+    }
+
+    public void setDigits(String digits) {
+        mDigits = digits;
     }
 
     /**

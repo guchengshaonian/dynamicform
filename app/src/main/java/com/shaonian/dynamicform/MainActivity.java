@@ -20,12 +20,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        EditTextFormItem<String> editTextFormItem = new EditTextFormItem<>("a", "b", "123");
+        EditTextFormItem editTextFormItem = new EditTextFormItem("a", "b", "123");
         Log.i("abdcf", editTextFormItem.getFormValue());
         TestBean testBean = new TestBean();
-        EditTextFormItem<TestBean> textFormItem = new EditTextFormItem<>("b", "index", testBean);
+        EditTextFormItem textFormItem = new EditTextFormItem("b", "index", testBean);
         Log.i("abdcf", textFormItem.getFormValue());
-        EditTextFormItem<TestBean> textFormItem2 = new EditTextFormItem<>("c", "value", testBean);
+        EditTextFormItem textFormItem2 = new EditTextFormItem("c", "value", testBean);
         Log.i("abdcf", textFormItem2.getFormValue());
     }
 }
