@@ -11,23 +11,23 @@ import java.util.Map;
  * Time: 22:07
  * 单选框（针对数量较少的选择）
  */
-public class CheckBoxFormItem extends BaseFormItem {
+public class RadioButtonFormItem extends BaseFormItem {
 
     private final Map<String, String> mCheckMap = new LinkedHashMap<>();
 
-    protected CheckBoxFormItem(String title, String formId, Object value) {
+    protected RadioButtonFormItem(String title, String formId, Object value) {
         super(title, formId, value);
     }
 
-    protected CheckBoxFormItem(String title, String formId, Object value, boolean isRequired) {
+    protected RadioButtonFormItem(String title, String formId, Object value, boolean isRequired) {
         super(title, formId, value, isRequired);
     }
 
-    protected CheckBoxFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly) {
+    protected RadioButtonFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly) {
         super(title, formId, value, isRequired, isReadOnly);
     }
 
-    protected CheckBoxFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
+    protected RadioButtonFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
         super(title, formId, value, isRequired, isReadOnly, verify);
     }
 

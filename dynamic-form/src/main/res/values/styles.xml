@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="is_required" format="boolean" />
+    <attr name="item_title" format="string|reference" />
+    <attr name="is_view_only" format="boolean" />
+
+    <declare-styleable name="EditTextFormView">
+        <attr name="is_required" />
+        <attr name="item_title" />
+        <attr name="is_view_only" />
+        <attr name="title_hint" format="string|reference" />
+        <attr name="verify" format="enum">
+            <enum name="base" value="1" />
+            <enum name="idCard" value="2" />
+            <enum name="phone" value="3" />
+            <enum name="regex" value="4" />
+            <enum name="null" value="5" />
+        </attr>
+    </declare-styleable>
+
+</resources>
