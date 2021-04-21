@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class RadioButtonFormItem extends BaseFormItem {
 
-    private final Map<String, String> mCheckMap = new LinkedHashMap<>();
+    private final LinkedHashMap<String, String> mCheckMap = new LinkedHashMap<>();
 
     protected RadioButtonFormItem(String title, String formId, Object value) {
         super(title, formId, value);

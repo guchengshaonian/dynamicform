@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.blankj.utilcode.util.RegexUtils;
 
 /**
- * @author Adminis.
+ * @author wk.
  * Date: 2021/3/8
  * Time: 22:45
  * 身份证号码校验

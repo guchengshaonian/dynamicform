@@ -1,7 +1,6 @@
 package com.shaonian.dynamic.form.ui;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 
 import com.shaonian.dynamic.form.R;
 import com.shaonian.dynamic.form.formitem.BaseFormItem;
-
-import org.w3c.dom.Text;
+import com.shaonian.dynamic.form.verify.BaseVerify;
 
 import androidx.annotation.Nullable;
 
@@ -31,6 +29,8 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
     protected boolean isViewOnly;
     protected String mTitle;
     protected int mVerify;
+    protected BaseVerify mBaseVerify;
+    protected FrameLayout mContainerLayout;
 
     public BaseFormView(Context context) {
         super(context);
@@ -56,8 +56,8 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
         addView(root);
         mTitleView = root.findViewById(R.id.tv_title);
         mRequireView = root.findViewById(R.id.iv_required);
-        FrameLayout frameLayout = root.findViewById(R.id.fl_container);
-        frameLayout.addView(getValueView(context));
+        mContainerLayout = root.findViewById(R.id.fl_container);
+        mContainerLayout.addView(getValueView(context));
         if (attrs != null) {
             initAttrs(context, attrs);
         }
@@ -90,7 +90,7 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
      *
      * @param baseFormItem 对应的formItem
      */
-    protected abstract void setFormItem(T baseFormItem);
+    public abstract void setFormItem(T baseFormItem);
 
     /**
      * 布局的设置值
@@ -129,5 +129,17 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
 
     public void setVerify(int verify) {
         mVerify = verify;
+    }
+
+    public BaseVerify getBaseVerify() {
+        return mBaseVerify;
+    }
+
+    public void setBaseVerify(BaseVerify baseVerify) {
+        mBaseVerify = baseVerify;
+    }
+
+    public T getBaseFormItem() {
+        return mBaseFormItem;
     }
 }

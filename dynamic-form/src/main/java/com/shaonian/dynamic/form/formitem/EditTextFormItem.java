@@ -1,6 +1,7 @@
 package com.shaonian.dynamic.form.formitem;
 
 import android.text.InputType;
+import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.RegexUtils;
@@ -17,7 +18,12 @@ import com.shaonian.dynamic.form.verify.RequiredVerify;
 public class EditTextFormItem extends BaseFormItem {
 
     private int mEditInputType = InputType.TYPE_NULL;
+    /**
+     * 限制输入字符
+     */
     private String mDigits = "";
+
+    private String hintText;
 
     public enum EditTextType {
         /**
@@ -36,6 +42,10 @@ public class EditTextFormItem extends BaseFormItem {
          * 数字类型
          */
         Number,
+        /**
+         * 密码
+         */
+        Password
     }
 
     public EditTextFormItem(String title, String formId, Object value) {
@@ -75,6 +85,17 @@ public class EditTextFormItem extends BaseFormItem {
         mDigits = digits;
     }
 
+    public String getHintText() {
+        if (TextUtils.isEmpty(hintText)) {
+            return "请输入" + getTitle();
+        }
+        return hintText;
+    }
+
+    public void setHintText(String hintText) {
+        this.hintText = hintText;
+    }
+
     /**
      * 根据不同的输入类型，设置不同的限制条件以及校验规则
      *
@@ -93,6 +114,9 @@ public class EditTextFormItem extends BaseFormItem {
                 mVerify = new IdCardVerify();
                 mEditInputType = InputType.TYPE_NUMBER_FLAG_SIGNED;
                 mDigits = "0123456789X";
+                break;
+            case Password:
+                mEditInputType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
                 break;
             case Normal:
             default:

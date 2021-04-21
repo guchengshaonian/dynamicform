@@ -2,10 +2,14 @@ package com.shaonian.dynamic.form.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 
 import com.shaonian.dynamic.form.R;
 import com.shaonian.dynamic.form.formitem.EditTextFormItem;
@@ -13,14 +17,15 @@ import com.shaonian.dynamic.form.formitem.EditTextFormItem;
 import androidx.annotation.Nullable;
 
 /**
- * @author Adminis.
+ * @author wk.
  * Date: 2021/3/10
  * Time: 22:38
  * 文本框View
  */
-public class EditTextFormView extends BaseFormView<EditTextFormItem> {
+public class EditTextFormView extends BaseFormView<EditTextFormItem> implements TextWatcher {
 
     private String mHintText;
+    private EditText mInputText;
 
     public EditTextFormView(Context context) {
         super(context);
@@ -36,7 +41,7 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> {
 
     @Override
     protected View getValueView(Context context) {
-        return LayoutInflater.from(context).inflate(R.layout.form_view_edit_view,this,false);
+        return LayoutInflater.from(context).inflate(R.layout.form_view_edit_view, this, false);
     }
 
     @Override
@@ -52,16 +57,44 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> {
 
     @Override
     protected void initView() {
-
+        mInputText = mContainerLayout.findViewById(R.id.et_input);
+        mRequireView.setVisibility(isRequired ? VISIBLE : GONE);
+        mInputText.setText(mBaseFormItem.getFormValue());
+        mInputText.setHint(mHintText);
+        mInputText.setEnabled(isViewOnly);
+        if (!TextUtils.isEmpty(mBaseFormItem.getDigits())) {
+            mInputText.setKeyListener(DigitsKeyListener.getInstance(mBaseFormItem.getDigits()));
+        }
+        mInputText.addTextChangedListener(this);
     }
 
     @Override
-    protected void setFormItem(EditTextFormItem baseFormItem) {
-
+    public void setFormItem(EditTextFormItem formItem) {
+        isRequired = formItem.isRequired();
+        isViewOnly = formItem.isReadOnly();
+        mTitle = formItem.getTitle();
+        mBaseVerify = formItem.getVerify();
+        mHintText = formItem.getHintText();
+        initView();
     }
 
     @Override
     protected Object getValue() {
-        return null;
+        return mInputText.getText().toString();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
