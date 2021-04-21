@@ -42,7 +42,7 @@ public abstract class BaseFormItem {
         this.isReadOnly = isReadOnly;
         this.isRequired = isRequired;
         this.mVerify = verify;
-        setFormValue();
+        setDefaultFormValue();
     }
 
     public String getTitle() {
@@ -75,12 +75,14 @@ public abstract class BaseFormItem {
 
     public void setValue(Object value) {
         mValue = value;
-        setFormValue();
+        setDefaultFormValue();
     }
 
-    public void setFormValue(String formValue) {
-        mFormValue = formValue;
-    }
+    /**
+     * 设置表单内容
+     * @param formValue　表单内容
+     */
+    protected abstract void setFormValue(String formValue);
 
     public boolean isReadOnly() {
         return isReadOnly;
@@ -114,7 +116,7 @@ public abstract class BaseFormItem {
     /**
      * 根据不同参数类型，设置成统一的输出
      */
-    protected void setFormValue() {
+    protected void setDefaultFormValue() {
         Class<?> entityClass = mValue.getClass();
         if (entityClass.equals(String.class)) {
             mFormValue = (String) mValue;
@@ -140,5 +142,6 @@ public abstract class BaseFormItem {
                 mFormValue = "";
             }
         }
+        setFormValue(mFormValue);
     }
 }
