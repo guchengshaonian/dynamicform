@@ -19,4 +19,10 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="RadioButtonFormView">
+        <attr name="is_required" />
+        <attr name="item_title" />
+        <attr name="is_view_only" />
+    </declare-styleable>
+
 </resources>

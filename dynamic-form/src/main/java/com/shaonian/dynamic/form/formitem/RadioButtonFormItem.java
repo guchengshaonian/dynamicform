@@ -20,24 +20,19 @@ public class RadioButtonFormItem extends BaseFormItem {
     private final List<DictBean> mRadioForm = new ArrayList<>();
 
     protected RadioButtonFormItem(String title, String formId, Object value) {
-        this(title, formId, value,false);
+        this(title, formId, value, false);
     }
 
     protected RadioButtonFormItem(String title, String formId, Object value, boolean isRequired) {
-        this(title, formId, value, isRequired,false);
+        this(title, formId, value, isRequired, false);
     }
 
     protected RadioButtonFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly) {
-        this(title, formId, value, isRequired, isReadOnly,new RequiredVerify());
+        this(title, formId, value, isRequired, isReadOnly, new RequiredVerify());
     }
 
     protected RadioButtonFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
         super(title, formId, value, isRequired, isReadOnly, verify);
-
-    }
-
-    @Override
-    protected void setFormValue(String formValue) {
 
     }
 
@@ -46,22 +41,22 @@ public class RadioButtonFormItem extends BaseFormItem {
      *
      * @param values 字符串
      */
-    public void setCheckData(String[] values) {
+    public void setChooseData(String[] values) {
         for (String value : values) {
-            mRadioForm.add(new DictBean(value,value));
+            mRadioForm.add(new DictBean(value, value));
         }
     }
 
     /**
-     * 传入字符串
+     * 传入字典对象
      *
      * @param dictBeans 选择内容
      */
-    public void setCheckData(List<DictBean> dictBeans) {
+    public void setChooseData(List<DictBean> dictBeans) {
         mRadioForm.addAll(dictBeans);
     }
 
-    public List<DictBean>  mRadioForm() {
+    public List<DictBean> mRadioForm() {
         return mRadioForm;
     }
 }

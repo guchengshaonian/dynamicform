@@ -17,7 +17,13 @@ public abstract class BaseFormItem {
 
     protected String mTitle;
     protected String mFormId;
+    /**
+     * 实际的value
+     */
     protected Object mValue;
+    /**
+     * 表单展示的value
+     */
     protected String mFormValue;
     protected boolean isRequired;
     protected boolean isReadOnly;
@@ -78,12 +84,6 @@ public abstract class BaseFormItem {
         setDefaultFormValue();
     }
 
-    /**
-     * 设置表单内容
-     * @param formValue　表单内容
-     */
-    protected abstract void setFormValue(String formValue);
-
     public boolean isReadOnly() {
         return isReadOnly;
     }
@@ -142,6 +142,5 @@ public abstract class BaseFormItem {
                 mFormValue = "";
             }
         }
-        setFormValue(mFormValue);
     }
 }

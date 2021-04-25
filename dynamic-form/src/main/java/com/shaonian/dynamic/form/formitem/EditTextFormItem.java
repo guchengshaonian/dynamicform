@@ -52,11 +52,6 @@ public class EditTextFormItem extends BaseFormItem {
         this(title, formId, value, EditTextType.Normal);
     }
 
-    @Override
-    protected void setFormValue(String formValue) {
-        mFormValue = formValue;
-    }
-
     public EditTextFormItem(String title, String formId, Object value, EditTextType textType) {
         this(title, formId, value, textType, true);
     }
