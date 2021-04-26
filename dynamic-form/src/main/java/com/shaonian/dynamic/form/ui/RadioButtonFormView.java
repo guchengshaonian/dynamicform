@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.shaonian.dynamic.form.R;
@@ -25,8 +26,8 @@ import androidx.annotation.Nullable;
 
 public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> {
 
+    private final List<DictBean> mDictBeans = new ArrayList<>();
     private RadioGroup mRadioGroup;
-    private List<DictBean> mDictBeans = new ArrayList<>();
 
     public RadioButtonFormView(Context context) {
         super(context);
@@ -61,22 +62,40 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> {
         mTitleView.setText(mTitle);
         if (mDictBeans.size() != 0) {
             for (DictBean dictBean : mDictBeans) {
-
+                RadioButton radioButton = new RadioButton(getContext());
+                radioButton.setText(dictBean.getValue());
+                mRadioGroup.addView(radioButton);
+                if (mFormViewValue.equals(dictBean.getName()) || mFormViewValue.equals(dictBean.getValue())) {
+                    radioButton.setChecked(true);
+                }
             }
         }
     }
 
     @Override
-    public void setFormItem(RadioButtonFormItem baseFormItem) {
-        isRequired = baseFormItem.isRequired();
-        isViewOnly = baseFormItem.isReadOnly();
-        mTitle = baseFormItem.getTitle();
-        mDictBeans.addAll(baseFormItem.mRadioForm());
+    public void setFormItem(RadioButtonFormItem formItem) {
+        isRequired = formItem.isRequired();
+        isViewOnly = formItem.isReadOnly();
+        mTitle = formItem.getTitle();
+        mDictBeans.addAll(formItem.mRadioForm());
+        mFormViewValue = formItem.getFormValue();
         initView();
     }
 
     @Override
     protected Object getValue() {
-        return null;
+        return mBaseFormItem.getValue();
+    }
+
+    @Override
+    public void setFormViewValue(String value) {
+        for (DictBean dictBean : mDictBeans) {
+            if (dictBean.getValue().equals(value) || dictBean.getName().equals(value)) {
+                int index = mDictBeans.indexOf(dictBean);
+                RadioButton radioButton = (RadioButton) mRadioGroup.getChildAt(index);
+                radioButton.setChecked(true);
+                return;
+            }
+        }
     }
 }

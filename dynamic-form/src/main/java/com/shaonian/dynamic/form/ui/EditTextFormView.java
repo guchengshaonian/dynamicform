@@ -52,6 +52,7 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
         mTitle = array.getString(R.styleable.EditTextFormView_item_title);
         mHintText = array.getString(R.styleable.EditTextFormView_title_hint);
         mVerify = array.getInt(R.styleable.EditTextFormView_verify, 5);
+        mFormViewValue = array.getString(R.styleable.EditTextFormView_text_content);
         array.recycle();
     }
 
@@ -59,7 +60,7 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
     protected void initView() {
         mInputText = mContainerLayout.findViewById(R.id.et_input);
         mRequireView.setVisibility(isRequired ? VISIBLE : GONE);
-        mInputText.setText(mBaseFormItem.getFormValue());
+        mInputText.setText(mFormViewValue);
         mInputText.setHint(mHintText);
         mInputText.setEnabled(isViewOnly);
         if (!TextUtils.isEmpty(mBaseFormItem.getDigits())) {
@@ -70,17 +71,24 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
 
     @Override
     public void setFormItem(EditTextFormItem formItem) {
+        mBaseFormItem = formItem;
         isRequired = formItem.isRequired();
         isViewOnly = formItem.isReadOnly();
         mTitle = formItem.getTitle();
         mBaseVerify = formItem.getVerify();
         mHintText = formItem.getHintText();
+        mFormViewValue = formItem.getFormValue();
         initView();
     }
 
     @Override
     protected Object getValue() {
         return mInputText.getText().toString();
+    }
+
+    @Override
+    public void setFormViewValue(String value) {
+        mInputText.setText(value);
     }
 
     @Override
@@ -95,6 +103,8 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        if (mBaseFormItem != null) {
+            mBaseFormItem.setValue(s.toString());
+        }
     }
 }

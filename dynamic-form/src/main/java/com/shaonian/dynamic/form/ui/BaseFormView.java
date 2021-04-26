@@ -31,6 +31,7 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
     protected int mVerify;
     protected BaseVerify mBaseVerify;
     protected FrameLayout mContainerLayout;
+    protected String mFormViewValue;
 
     public BaseFormView(Context context) {
         super(context);
@@ -142,4 +143,14 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
     public T getBaseFormItem() {
         return mBaseFormItem;
     }
+
+    public String getFormViewValue() {
+        return mFormViewValue;
+    }
+
+    /**
+     * 设置表单项的内容值
+     * @param value 值
+     */
+    public abstract void setFormViewValue(String value);
 }

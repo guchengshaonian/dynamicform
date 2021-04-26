@@ -10,6 +10,7 @@
         <attr name="item_title" />
         <attr name="is_view_only" />
         <attr name="title_hint" format="string|reference" />
+        <attr name="text_content" format="string|reference" />
         <attr name="verify" format="enum">
             <enum name="base" value="1" />
             <enum name="idCard" value="2" />
