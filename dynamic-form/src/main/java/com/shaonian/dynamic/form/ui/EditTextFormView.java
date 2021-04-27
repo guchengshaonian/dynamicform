@@ -26,6 +26,7 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
 
     private String mHintText;
     private EditText mInputText;
+    private String mDigits;
 
     public EditTextFormView(Context context) {
         super(context);
@@ -51,8 +52,9 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
         isViewOnly = array.getBoolean(R.styleable.EditTextFormView_is_view_only, false);
         mTitle = array.getString(R.styleable.EditTextFormView_item_title);
         mHintText = array.getString(R.styleable.EditTextFormView_title_hint);
-        mVerify = array.getInt(R.styleable.EditTextFormView_verify, 5);
-        mFormViewValue = array.getString(R.styleable.EditTextFormView_text_content);
+        mVerify = array.getInt(R.styleable.EditTextFormView_verify, 6);
+        mFormViewValue = array.getString(R.styleable.EditTextFormView_form_value);
+        mDigits = array.getString(R.styleable.EditTextFormView_form_digits);
         array.recycle();
     }
 
@@ -63,22 +65,16 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
         mInputText.setText(mFormViewValue);
         mInputText.setHint(mHintText);
         mInputText.setEnabled(isViewOnly);
-        if (!TextUtils.isEmpty(mBaseFormItem.getDigits())) {
-            mInputText.setKeyListener(DigitsKeyListener.getInstance(mBaseFormItem.getDigits()));
+        if (!TextUtils.isEmpty(mDigits)) {
+            mInputText.setKeyListener(DigitsKeyListener.getInstance(mDigits));
         }
         mInputText.addTextChangedListener(this);
     }
 
     @Override
-    public void setFormItem(EditTextFormItem formItem) {
-        mBaseFormItem = formItem;
-        isRequired = formItem.isRequired();
-        isViewOnly = formItem.isReadOnly();
-        mTitle = formItem.getTitle();
-        mBaseVerify = formItem.getVerify();
+    public void setDifferenceAttribute(EditTextFormItem formItem) {
         mHintText = formItem.getHintText();
-        mFormViewValue = formItem.getFormValue();
-        initView();
+        mDigits = formItem.getDigits();
     }
 
     @Override
@@ -103,8 +99,8 @@ public class EditTextFormView extends BaseFormView<EditTextFormItem> implements 
 
     @Override
     public void afterTextChanged(Editable s) {
-        if (mBaseFormItem != null) {
-            mBaseFormItem.setValue(s.toString());
+        if (mFormItem != null) {
+            mFormItem.setValue(s.toString());
         }
     }
 }

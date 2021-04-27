@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
  */
 public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout {
 
-    protected T mBaseFormItem;
+    protected T mFormItem;
     protected TextView mTitleView;
     protected ImageView mRequireView;
     protected boolean isRequired;
@@ -74,7 +74,7 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
     protected abstract View getValueView(Context context);
 
     /**
-     * 初始化自定属性
+     * 初始化自定属性(可没有)
      *
      * @param context 上下文
      * @param attrs   属性
@@ -91,7 +91,18 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
      *
      * @param baseFormItem 对应的formItem
      */
-    public abstract void setFormItem(T baseFormItem);
+    public void setFormItem(T baseFormItem) {
+        mFormItem = baseFormItem;
+        isRequired = baseFormItem.isRequired();
+        isViewOnly = baseFormItem.isReadOnly();
+        mTitle = baseFormItem.getTitle();
+        mFormViewValue = baseFormItem.getFormValue();
+        mBaseVerify = baseFormItem.getVerify();
+        setDifferenceAttribute(baseFormItem);
+        initView();
+    }
+
+    public abstract void setDifferenceAttribute(T formItem);
 
     /**
      * 布局的设置值
@@ -140,8 +151,8 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
         mBaseVerify = baseVerify;
     }
 
-    public T getBaseFormItem() {
-        return mBaseFormItem;
+    public T getFormItem() {
+        return mFormItem;
     }
 
     public String getFormViewValue() {
@@ -150,6 +161,7 @@ public abstract class BaseFormView<T extends BaseFormItem> extends LinearLayout 
 
     /**
      * 设置表单项的内容值
+     *
      * @param value 值
      */
     public abstract void setFormViewValue(String value);

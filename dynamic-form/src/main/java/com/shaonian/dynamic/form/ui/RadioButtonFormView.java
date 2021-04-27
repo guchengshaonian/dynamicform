@@ -18,13 +18,13 @@ import java.util.List;
 import androidx.annotation.Nullable;
 
 /**
- * 数量较少的单选表单view
+ * 数量较少(最多4个)的单选表单view
  *
  * @author wk
  * @date 2021/04/25
  */
 
-public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> {
+public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> implements RadioGroup.OnCheckedChangeListener {
 
     private final List<DictBean> mDictBeans = new ArrayList<>();
     private RadioGroup mRadioGroup;
@@ -52,6 +52,7 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> {
         isRequired = array.getBoolean(R.styleable.RadioButtonFormView_is_required, true);
         isViewOnly = array.getBoolean(R.styleable.RadioButtonFormView_is_view_only, false);
         mTitle = array.getString(R.styleable.RadioButtonFormView_item_title);
+        mFormViewValue = array.getString(R.styleable.EditTextFormView_form_value);
         array.recycle();
     }
 
@@ -65,26 +66,22 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> {
                 RadioButton radioButton = new RadioButton(getContext());
                 radioButton.setText(dictBean.getValue());
                 mRadioGroup.addView(radioButton);
-                if (mFormViewValue.equals(dictBean.getName()) || mFormViewValue.equals(dictBean.getValue())) {
+                if (dictBean.getName().equals(mFormViewValue) || dictBean.getValue().equals(mFormViewValue)) {
                     radioButton.setChecked(true);
                 }
             }
         }
+        mRadioGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
-    public void setFormItem(RadioButtonFormItem formItem) {
-        isRequired = formItem.isRequired();
-        isViewOnly = formItem.isReadOnly();
-        mTitle = formItem.getTitle();
+    public void setDifferenceAttribute(RadioButtonFormItem formItem) {
         mDictBeans.addAll(formItem.mRadioForm());
-        mFormViewValue = formItem.getFormValue();
-        initView();
     }
 
     @Override
     protected Object getValue() {
-        return mBaseFormItem.getValue();
+        return mFormItem.getValue();
     }
 
     @Override
@@ -95,6 +92,16 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> {
                 RadioButton radioButton = (RadioButton) mRadioGroup.getChildAt(index);
                 radioButton.setChecked(true);
                 return;
+            }
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        RadioButton radioButton = group.findViewById(checkedId);
+        for (DictBean dictBean : mDictBeans) {
+            if (dictBean.getName().equals(radioButton.getText().toString())) {
+                mFormItem.setValue(dictBean.getValue());
             }
         }
     }

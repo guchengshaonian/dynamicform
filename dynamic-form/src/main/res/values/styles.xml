@@ -4,19 +4,22 @@
     <attr name="is_required" format="boolean" />
     <attr name="item_title" format="string|reference" />
     <attr name="is_view_only" format="boolean" />
+    <attr name="form_value" format="string|reference" />
 
     <declare-styleable name="EditTextFormView">
         <attr name="is_required" />
         <attr name="item_title" />
         <attr name="is_view_only" />
+        <attr name="form_value" />
         <attr name="title_hint" format="string|reference" />
-        <attr name="text_content" format="string|reference" />
+        <attr name="form_digits" format="string|reference" />
         <attr name="verify" format="enum">
             <enum name="base" value="1" />
             <enum name="idCard" value="2" />
             <enum name="phone" value="3" />
             <enum name="regex" value="4" />
-            <enum name="null" value="5" />
+            <enum name="custom" value="5" />
+            <enum name="null" value="6" />
         </attr>
     </declare-styleable>
 
@@ -24,6 +27,15 @@
         <attr name="is_required" />
         <attr name="item_title" />
         <attr name="is_view_only" />
+        <attr name="form_value" />
+    </declare-styleable>
+
+    <declare-styleable name="DateSelectFormView">
+        <attr name="is_required" />
+        <attr name="item_title" />
+        <attr name="is_view_only" />
+        <attr name="form_value" />
+        <attr name="date_format" format="string|reference" />
     </declare-styleable>
 
 </resources>
