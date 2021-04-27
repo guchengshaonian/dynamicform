@@ -12,7 +12,7 @@ import android.content.Context;
 
 public class DateTimePickerDialog extends AlertDialog {
 
-    protected DateTimePickerDialog(Context context) {
+    protected DateTimePickerDialog(Context context, int year, int month, int day, int hour, int minute, int second) {
         super(context);
     }
 
