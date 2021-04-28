@@ -38,4 +38,15 @@
         <attr name="date_format" format="string|reference" />
     </declare-styleable>
 
+    <declare-styleable name="SingleSelectFormView">
+        <attr name="is_required" />
+        <attr name="item_title" />
+        <attr name="is_view_only" />
+        <attr name="form_value" />
+        <attr name="select_mode" format="enum">
+            <enum name="pullDownList" value="1" />
+            <enum name="windowDialog" value="2" />
+        </attr>
+    </declare-styleable>
+
 </resources>

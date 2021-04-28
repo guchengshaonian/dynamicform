@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shaonian.dynamic.form.R;
 import com.shaonian.dynamic.form.formitem.DateSelectFormItem;
+import com.shaonian.dynamic.form.widget.DateTimePickerDialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,7 @@ import androidx.annotation.Nullable;
  * @date 2021/04/27
  */
 
-public class DateSelectFormView extends BaseFormView<DateSelectFormItem> implements DatePickerDialog.OnDateSetListener {
+public class DateSelectFormView extends BaseFormView<DateSelectFormItem> implements DatePickerDialog.OnDateSetListener, DateTimePickerDialog.DataTimeSetListener {
     private TextView mDateSelect;
     private String mDateFormat;
     private static final int LENGTH_NYR = 3;
@@ -90,12 +91,14 @@ public class DateSelectFormView extends BaseFormView<DateSelectFormItem> impleme
                 datePickerDialog.show();
                 break;
             case DateSelectFormItem.DATA_FORMAT_SFM:
-                //TODO 用numberPick实现年月日时分秒的选择器
                 if (dates.length < LENGTH_SFM) {
                     ToastUtils.showShort("时间解析失误");
                     return;
                 }
-
+                //年月日时分秒的选择器
+                DateTimePickerDialog dateTimePickerDialog = new DateTimePickerDialog(getContext(), this,
+                        dates[0], dates[1], dates[2], dates[3], dates[4], dates[5]);
+                dateTimePickerDialog.show();
                 break;
             default:
                 break;
@@ -161,6 +164,12 @@ public class DateSelectFormView extends BaseFormView<DateSelectFormItem> impleme
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         mDateSelect.setText(String.format("%s-%s-%s", year, month, dayOfMonth));
+        mFormItem.setValue(mDateSelect.getText().toString());
+    }
+
+    @Override
+    public void onDateSet(int year, int month, int day, int hour, int minute, int second) {
+        mDateSelect.setText(String.format("%s-%s-%s %s:%s:%s", year, month, day, hour, minute, second));
         mFormItem.setValue(mDateSelect.getText().toString());
     }
 }

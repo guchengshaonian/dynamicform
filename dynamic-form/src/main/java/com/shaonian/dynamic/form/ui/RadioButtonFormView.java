@@ -52,7 +52,7 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> imple
         isRequired = array.getBoolean(R.styleable.RadioButtonFormView_is_required, true);
         isViewOnly = array.getBoolean(R.styleable.RadioButtonFormView_is_view_only, false);
         mTitle = array.getString(R.styleable.RadioButtonFormView_item_title);
-        mFormViewValue = array.getString(R.styleable.EditTextFormView_form_value);
+        mFormViewValue = array.getString(R.styleable.RadioButtonFormView_form_value);
         array.recycle();
     }
 
@@ -66,6 +66,7 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> imple
                 RadioButton radioButton = new RadioButton(getContext());
                 radioButton.setText(dictBean.getValue());
                 mRadioGroup.addView(radioButton);
+                radioButton.setEnabled(!isViewOnly);
                 if (dictBean.getName().equals(mFormViewValue) || dictBean.getValue().equals(mFormViewValue)) {
                     radioButton.setChecked(true);
                 }
@@ -76,7 +77,7 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> imple
 
     @Override
     public void setDifferenceAttribute(RadioButtonFormItem formItem) {
-        mDictBeans.addAll(formItem.mRadioForm());
+        mDictBeans.addAll(formItem.getRadioSelectList());
     }
 
     @Override

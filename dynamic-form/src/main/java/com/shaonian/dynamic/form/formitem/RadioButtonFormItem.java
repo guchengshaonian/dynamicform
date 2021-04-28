@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class RadioButtonFormItem extends BaseFormItem {
 
-    private final List<DictBean> mRadioForm = new ArrayList<>();
+    private final List<DictBean> mRadioSelectList = new ArrayList<>();
 
     protected RadioButtonFormItem(String title, String formId, Object value) {
         this(title, formId, value, false);
@@ -43,7 +43,7 @@ public class RadioButtonFormItem extends BaseFormItem {
      */
     public void setChooseData(String[] values) {
         for (String value : values) {
-            mRadioForm.add(new DictBean(value, value));
+            mRadioSelectList.add(new DictBean(value, value));
         }
     }
 
@@ -53,10 +53,10 @@ public class RadioButtonFormItem extends BaseFormItem {
      * @param dictBeans 选择内容
      */
     public void setChooseData(List<DictBean> dictBeans) {
-        mRadioForm.addAll(dictBeans);
+        mRadioSelectList.addAll(dictBeans);
     }
 
-    public List<DictBean> mRadioForm() {
-        return mRadioForm;
+    public List<DictBean> getRadioSelectList() {
+        return mRadioSelectList;
     }
 }
