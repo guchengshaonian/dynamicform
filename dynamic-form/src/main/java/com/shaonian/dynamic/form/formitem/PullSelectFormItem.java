@@ -8,40 +8,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 单层单项选择item
+ * 下拉框选择item
  *
  * @author wk
  * @date 2021/04/28
  */
 
-public class SingleSelectFormItem extends BaseFormItem {
+public class PullSelectFormItem extends BaseFormItem {
 
     /**
-     * 下拉框方式展示
+     * 单选
      */
-    public static final int PULL_DOWN_LIST = 1;
+    public static final int SINGLE_SELECT = 1;
     /**
-     * 弹窗展示
+     * 多选
      */
-    public static final int WINDOW_DIALOG = 2;
+    public static final int MULTIPLE_SELECT = 2;
+    /**
+     * 多级联动单选
+     */
+    public static final int LINKED_SINGLE_SELECT = 3;
+    /**
+     * 多级联动多选
+     */
+    public static final int LINKED_MULTIPLE_SELECT = 4;
 
-    private int mMode = PULL_DOWN_LIST;
+    private int mMode = SINGLE_SELECT;
 
     private final List<DictBean> mSelectFormList = new ArrayList<>();
 
-    protected SingleSelectFormItem(String title, String formId, Object value) {
+    protected PullSelectFormItem(String title, String formId, Object value) {
         this(title, formId, value, false);
     }
 
-    protected SingleSelectFormItem(String title, String formId, Object value, boolean isRequired) {
+    protected PullSelectFormItem(String title, String formId, Object value, boolean isRequired) {
         this(title, formId, value, isRequired, false);
     }
 
-    protected SingleSelectFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly) {
+    protected PullSelectFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly) {
         this(title, formId, value, isRequired, isReadOnly, new RequiredVerify());
     }
 
-    protected SingleSelectFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
+    protected PullSelectFormItem(String title, String formId, Object value, boolean isRequired, boolean isReadOnly, BaseVerify verify) {
         super(title, formId, value, isRequired, isReadOnly, verify);
     }
 

@@ -77,6 +77,7 @@ public class RadioButtonFormView extends BaseFormView<RadioButtonFormItem> imple
 
     @Override
     public void setDifferenceAttribute(RadioButtonFormItem formItem) {
+        mDictBeans.clear();
         mDictBeans.addAll(formItem.getRadioSelectList());
     }
 

@@ -69,6 +69,8 @@ public class DateSelectFormView extends BaseFormView<DateSelectFormItem> impleme
         mRequireView.setVisibility(isRequired ? VISIBLE : GONE);
         if (!isViewOnly) {
             mDateSelect.setOnClickListener(this::onShowDateSelect);
+        } else {
+            mDateSelect.setOnClickListener(null);
         }
         mTitleView.setText(mTitle);
         mDateSelect.setText(mFormViewValue);
