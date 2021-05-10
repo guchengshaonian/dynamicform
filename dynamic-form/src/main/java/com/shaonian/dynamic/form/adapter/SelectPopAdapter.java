@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shaonian.dynamic.form.R;
+import com.shaonian.dynamic.form.bean.AdapterChooseBean;
 import com.shaonian.dynamic.form.bean.DictBean;
 
 import java.util.ArrayList;
@@ -24,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelectPopAdapter extends RecyclerView.Adapter<SelectPopAdapter.SelectPopViewHolder> {
 
-    private final List<DictBean> mDictBeans;
-    private final List<DictBean> mChooseBeans = new ArrayList<>();
+    private final List<AdapterChooseBean<DictBean>> mDictBeans = new ArrayList<>();
+    private final List<AdapterChooseBean<DictBean>> mChooseBeans = new ArrayList<>();
     private final boolean isMultiple;
     private final boolean isLinked;
     private SelectValueListener mSelectValueListener;
@@ -44,19 +45,27 @@ public class SelectPopAdapter extends RecyclerView.Adapter<SelectPopAdapter.Sele
     }
 
     public List<DictBean> getChooseBeans() {
-        return mChooseBeans;
+        List<DictBean> beanList = new ArrayList<>();
+        for (AdapterChooseBean<DictBean> chooseBean : mChooseBeans) {
+            if (chooseBean.isChoose()) {
+                beanList.add(chooseBean.getBean());
+            }
+        }
+        return beanList;
     }
 
     public SelectPopAdapter(List<DictBean> dictBeanList, boolean isMultiple, boolean isLinked) {
         super();
-        this.mDictBeans = dictBeanList;
         this.isMultiple = isMultiple;
         this.isLinked = isLinked;
+        setNewData(dictBeanList);
     }
 
     public void setNewData(List<DictBean> dictBeans) {
         mDictBeans.clear();
-        mDictBeans.addAll(dictBeans);
+        for (DictBean dictBean : dictBeans) {
+            mDictBeans.add(new AdapterChooseBean<>(dictBean));
+        }
         notifyDataSetChanged();
     }
 
@@ -68,7 +77,7 @@ public class SelectPopAdapter extends RecyclerView.Adapter<SelectPopAdapter.Sele
 
     @Override
     public void onBindViewHolder(@NonNull SelectPopAdapter.SelectPopViewHolder holder, int position) {
-        holder.fill(mDictBeans.get(position), isMultiple, isLinked);
+        holder.fill(mDictBeans.get(position).getBean(), isMultiple, isLinked);
         holder.itemView.setOnClickListener(v -> {
             if (isMultiple) {
                 if (isLinked) {
@@ -81,7 +90,7 @@ public class SelectPopAdapter extends RecyclerView.Adapter<SelectPopAdapter.Sele
                     // TODO 展开下一层
                 } else {
                     if (mSelectValueListener != null) {
-                        mSelectValueListener.onSelectValue(mDictBeans.get(position));
+                        mSelectValueListener.onSelectValue(mDictBeans.get(position).getBean());
                     }
                 }
             }
