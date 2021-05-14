@@ -92,8 +92,11 @@ public class SelectPopWindow extends PopupWindow {
         // 根据选择类型以及数据源的情况动态生成recycleView并设置数据
         switch (mMode) {
             case PullSelectFormItem.SINGLE_SELECT:
-            case PullSelectFormItem.MULTIPLE_SELECT:
                 setSingleView(container);
+                break;
+            case PullSelectFormItem.MULTIPLE_SELECT:
+                break;
+            default:
                 break;
         }
     }
@@ -106,7 +109,7 @@ public class SelectPopWindow extends PopupWindow {
     private void setSingleView(LinearLayout container) {
         RecyclerView recyclerView = new RecyclerView(mContext);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
+        // TODO 暂时搁置
     }
 
     /**

@@ -53,7 +53,7 @@ public class EditTextFormItem extends BaseFormItem {
     }
 
     public EditTextFormItem(String title, String formId, Object value, EditTextType textType) {
-        this(title, formId, value, textType, true);
+        this(title, formId, value, textType, false);
     }
 
     public EditTextFormItem(String title, String formId, Object value, EditTextType textType, boolean isRequired) {

@@ -51,4 +51,11 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="SelectFormView">
+        <attr name="is_required" />
+        <attr name="item_title" />
+        <attr name="is_view_only" />
+        <attr name="form_value" />
+    </declare-styleable>
+
 </resources>
