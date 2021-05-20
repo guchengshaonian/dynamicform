@@ -7,11 +7,13 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 表单的属性配置，直接配置在JavaBean中，根据属性完成各式属性配置
  * <p>
- * 类型，展示方式，校验，关联校验，默认值，字典值
+ * 类型，展示方式，校验，关联校验，默认值，字典值，触发事件的值和对象
  *
  * @author wk
  * @date 2021/05/14
@@ -74,4 +76,10 @@ public @interface FromEntityNature {
      * @return 字典值
      */
     String dict() default "";
+
+    /**
+     * 触发事件的值，样例：["true: sfss，aaa"]//冒号前为值，冒号后为影响的对应字段，可以多个，用”，”区分
+     * @return 值
+     */
+    String[] triggerValue() default {};
 }
