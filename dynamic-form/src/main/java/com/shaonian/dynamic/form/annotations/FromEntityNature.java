@@ -1,6 +1,7 @@
 package com.shaonian.dynamic.form.annotations;
 
 import com.shaonian.dynamic.form.bridge.BaseBridge;
+import com.shaonian.dynamic.form.formitem.BaseFormItem;
 import com.shaonian.dynamic.form.verify.BaseVerify;
 
 import java.lang.annotation.ElementType;
@@ -27,6 +28,13 @@ public @interface FromEntityNature {
      * @return 唯一ID
      */
     String formId() default "";
+
+    /**
+     * 表单类型
+     *
+     * @return 类型对应的class文件
+     */
+    Class<? extends BaseFormItem> type() default BaseFormItem.class;
 
     /**
      * 校验方式
@@ -79,6 +87,7 @@ public @interface FromEntityNature {
 
     /**
      * 触发事件的值，样例：["true: sfss，aaa"]//冒号前为值，冒号后为影响的对应字段，可以多个，用”，”区分
+     *
      * @return 值
      */
     String[] triggerValue() default {};
