@@ -1,7 +1,14 @@
 package com.shaonian.dynamic.form.bridge;
 
+import com.blankj.utilcode.util.ArrayUtils;
 import com.shaonian.dynamic.form.formitem.BaseFormItem;
 import com.shaonian.dynamic.form.verify.VerifyResult;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
  * @author wk.
@@ -10,13 +17,40 @@ import com.shaonian.dynamic.form.verify.VerifyResult;
  */
 public abstract class BaseBridge {
 
-    //TODO 采用常量池和队列的方式，来搜索相同的连接校验，如果item和type一致，则使用同一个
-    protected BaseFormItem mSourceItem;
-    protected BaseFormItem[] mTargetItems;
+    protected static final int ONE_TO_ONE = 1;
+    protected static final int ONE_TO_MORE = 2;
+    protected static final int MORE_TO_MORE = 3;
+    protected int mMode;
+    //TODO 采用常量池和消息队列的方式，来搜索相同的连接校验，如果item和type一致，则使用同一个
+    protected List<BaseFormItem> mSourceItems;
+    protected List<BaseFormItem> mTargetItems;
+    protected BridgeType mBridgeType;
+    protected BridgeVerifyType mBridgeVerifyType;
 
-    protected BaseBridge(BaseFormItem sourceItem, BaseFormItem... targetItems) {
-        mSourceItem = sourceItem;
-        mTargetItems = targetItems;
+    protected BaseBridge(BaseFormItem sourceItem, BaseFormItem targetItem) {
+        this(Collections.singletonList(sourceItem), Collections.singletonList(targetItem));
+        mMode = ONE_TO_ONE;
+    }
+
+    protected BaseBridge(BaseFormItem sourceItem, BaseFormItem[] targetItems) {
+        this(Collections.singletonList(sourceItem), Arrays.asList(targetItems));
+        mMode = ONE_TO_MORE;
+    }
+
+    protected BaseBridge(BaseFormItem[] sourceItems, BaseFormItem[] targetItems) {
+        this(Arrays.asList(sourceItems), Arrays.asList(targetItems));
+        mMode = MORE_TO_MORE;
+    }
+
+    protected BaseBridge(BaseFormItem sourceItem, List<BaseFormItem> targetItems) {
+        this(Collections.singletonList(sourceItem), targetItems);
+        mMode = ONE_TO_MORE;
+    }
+
+    protected BaseBridge(List<BaseFormItem> sourceItems, List<BaseFormItem> targetItems) {
+        this.mSourceItems = sourceItems;
+        this.mTargetItems = targetItems;
+        mMode = MORE_TO_MORE;
     }
 
     /**
@@ -24,23 +58,39 @@ public abstract class BaseBridge {
      *
      * @return 类型
      */
-    protected abstract BridgeVerifyType getBridgeType();
+    protected abstract BridgeVerifyType getBridgeVerifyType();
+
+    /**
+     * 获取比较类型
+     *
+     * @return 比较类型
+     */
+    @Nullable
+    protected abstract BridgeType getBridgeType();
 
     public VerifyResult onVerify() {
-        BridgeVerifyType bridgeVerifyType = getBridgeType();
-        if (bridgeVerifyType == null) {
-            return VerifyResult.fail("请设置联合校验类型");
+        mBridgeVerifyType = getBridgeVerifyType();
+        mBridgeType = getBridgeType();
+        if (mBridgeVerifyType == null || mBridgeType == null) {
+            return VerifyResult.fail("请设置正确校验类型");
         }
-        return onBridgeVerify(mSourceItem, mTargetItems);
+        if (ArrayUtils.isEmpty(mSourceItems) || ArrayUtils.isEmpty(mTargetItems)) {
+            return VerifyResult.fail("请设置正确的数据");
+        }
+        return onBridgeVerify(mSourceItems, mTargetItems);
+    }
+
+    public void setBridgeType(BridgeType bridgeType) {
+        mBridgeType = bridgeType;
     }
 
     /**
      * 表单组联合校验
      *
-     * @param sourceItem  源目标
+     * @param sourceItems 源目标
      * @param targetItems 比较对象目标
      * @return 校验结果
      */
-    public abstract VerifyResult onBridgeVerify(BaseFormItem sourceItem, BaseFormItem... targetItems);
+    protected abstract VerifyResult onBridgeVerify(List<BaseFormItem> sourceItems, List<BaseFormItem> targetItems);
 
 }
